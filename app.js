@@ -5,23 +5,27 @@ const game = {
   secretNum: null,
   prevGuesses: [],
   play: function() {
+    //call method to set the range
     this.setRange()
     // find the sectrum number in the range
     this.secretNum = Math.floor(Math.random() * 
       (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
-
+     // loop at least one before checking the condition
     do {
+
     this.prevGuesses.push(this.getGuess());
     this.resetRange();
-    this.render();  
+    this.render(); 
+    //  keep looping unless the the last element of prevGuesses array is  equal to the secretNum 
     } while (this.prevGuesses[this.prevGuesses.length-1] !== this.secretNum);
   
     },
     getGuess:function() {
-      let input;
-      do{
+    let input;
+    do{
+      
         input = parseInt(prompt(`Enter a guess between ${this.smallestNum} and ${this.biggestNum}`));
-      }
+    }
     while(isNaN(input) || input < this.smallestNum || input > this.biggestNum)
     return input;
     },
@@ -59,8 +63,11 @@ const game = {
     },
     render: function(){
       let text;
+      // if the element prevGuesses array is equal to the secretNum
       if(this.prevGuesses[this.prevGuesses.length-1] === this.secretNum) {
-        text =`You guessed the number in ${this.prevGuesses.length} ${this.prevGuesses.length > 1 ? "guesses" : "guess"}`;
+        text =`You guessed the number in ${this.prevGuesses.length} 
+       
+        ${this.prevGuesses.length > 1 ? "guesses" : "guess"}`;
       } else{
         text = `Your guess is too" ${this.prevGuesses[this.prevGuesses.length-1] > this.secretNum ? "high" : "low"}\nPrevious guesses: ${this.prevGuesses.join(",")}`;
       }
